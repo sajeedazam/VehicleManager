@@ -52,8 +52,8 @@ benefit the user.
 ## User Stories
 
 - As a user, I want to be able to add a license plate.
-- As a user, I want to be able to declare what type (bike / car / truck) of vehicle it is.
-- As a user, I want to be able to add the model of the vehicle.
-- As a user, I want to be able to add the colour of the vehicle.
+- As a user, I want to be able to declare what colour and type (bike / sedan / truck) of vehicle it is.
+- As a user, I want to be able to add the model of the vehicle. (Toyota, Nissan, etc.)
 - As a user, I want to be able to declare whether the vehicle is of private or commercial use.
 - As a user, I want to be able to add comments/complaints about the vehicle.
+- As a user, I want to be able to view my license plates and their information.

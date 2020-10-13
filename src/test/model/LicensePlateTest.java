@@ -1,13 +1,11 @@
 package model;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class LicensePlateTest {
     public static void main(String[] args) {
-        LicensePlate A;
-        A = new LicensePlate("ererf");
+        VehicleAttributes A;
+      //  A = new VehicleAttributes("ererf");
    //     LicensePlate B = new LicensePlate("123Abc");
-        A.toString();
+    //    A.toString();
 
 
     }
