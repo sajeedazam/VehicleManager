@@ -2,10 +2,10 @@
 
 ***What will the application do?***
 - This application allows you to add a vehicle's license plate.
-- Lets you provide details (model,colour,commercial or private) about the vehicle that's license plate has been added.
-- Allow you to comment/complain on the vehicle.
-- All the added license plates, and their information will be retained in the application.
-- Is able to separate the vehicle that is added.
+- Lets you provide a unique detail (comment, model, colour, commercial or private) about the vehicle that's license
+  plate has been added.
+- All the added license plates can be displayed.
+- The license plate's corresponding detail can be viewed.
 
 ***Who will use it?***
 
@@ -29,8 +29,7 @@ inclusive such as parking incorrectly or parking in handicapped zones. They can 
 the local police if they wish.
 
 - *All-Encompassing use:* Vehicle owners may keep track of their own vehicle(s). They can use this application as a 
-means to remember their license plate(s). They could easily retrieve the information about their vehicle to the police
-in an instance their car gets stolen. This application can also be used to cross-check if they are getting into the 
+means to remember their license plate(s). This application can also be used to cross-check if they are getting into the 
 right car if it happens they parked it in a busy mall parking lot where there are a lot more similar cars parked
 around it. The features included in the application is a bit more user-friendly than just writing the license plate 
 number on their Notes application. Other than all these, this application is still relevant to any other use that may 
@@ -39,7 +38,7 @@ benefit the user.
  *Note: Use of the word **Vehicles** implies that the user can set the type of vehicle so that it shows whether the 
  vehicle is of type truck / sedan / bike. The domain of vehicles excludes public transportations such as buses and taxis 
  unless the user finds a use of it in any other way. Furthermore, this application does not do a check on the license 
- plate number as this is for global use, in other words different countries have different kinds of license plate with 
+ plate number as this is for global use, in other words, different countries have different kinds of license plate with 
  varied use of digits, letters (including different language's letters) or even words. Hence, the license plate will be
  stored as a string.* 
  
@@ -51,9 +50,12 @@ benefit the user.
   
 ## User Stories
 
-- As a user, I want to be able to add a license plate.
-- As a user, I want to be able to declare what colour and type (bike / sedan / truck) of vehicle it is.
-- As a user, I want to be able to add the model of the vehicle. (Toyota, Nissan, etc.)
-- As a user, I want to be able to declare whether the vehicle is of private or commercial use.
-- As a user, I want to be able to add comments/complaints about the vehicle.
-- As a user, I want to be able to view my license plates and their information.
+- As a user, I want to be able to add as many license plates as I want.
+- As a user, I want to be able to declare what colour and type (bike / sedan / truck) of vehicle it is as a unique
+ detail.
+- As a user, I want to be able to add the model of the vehicle. (Toyota, Nissan, etc.) as a unique detail.
+- As a user, I want to be able to declare whether the vehicle is of private or commercial use as a unique detail.
+- As a user, I want to be able to add comments/complaints about the vehicle as a unique detail.
+- As a user, I want to be able to view my license plate's corresponding information.
+- As a user, I want to be able to view all my added license plates.
+- As a user, I want to be able to close the application after I am done.

@@ -17,8 +17,8 @@ public class LicensePlateListTest {
     }
 
     @Test
-    public void testGetPlateWorks() {
-        assertEquals(null,plate1.getPlate());
+    public void testGetAndSetPlateWorks() {
+        assertNull(null,plate1.getPlate());
         plate1.setPlate("123-ABC");
         assertEquals("123-ABC",plate1.getPlate());
     }

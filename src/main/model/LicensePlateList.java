@@ -3,10 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//this class stores the License plates and also stores the corresponding
+//Vehicle Attributes associated to it by using ArrayList.
 public class LicensePlateList {
-    //this class stores the License plates and also stores the corresponding
-    //Vehicle Attributes associated to it by using ArrayList.
 
     //fields
     private String plate;
@@ -32,11 +31,6 @@ public class LicensePlateList {
     public List<VehicleAttributes> getVehicleAttributes() {
         return vehicleAttributes;
     }
-
-    //EFFECTS:  sets vehicle attributes;
-//    public void setVehicleAttributes(List<VehicleAttributes> vehicleAttributes) {
-//        this.vehicleAttributes = vehicleAttributes;
-//    }
 
     //EFFECTS:  adds vehicle attributes;
     public void addVehicleAttributes(VehicleAttributes vehicleAttribute) {

@@ -8,7 +8,7 @@ public class VehicleAttributes {
 
     //fields
     private String vehicleColourAndType;        // colour and type of the vehicle (i.e black sedan, white truck,etc)
-    private String vehicleModel;                // model of vehicle
+    private String vehicleModel;                // model or brand name of vehicle
     private String vehicleComment;              // comment on vehicle
     private boolean vehicleIsPrivate;           // whether commercial or private use (true = private use)
 

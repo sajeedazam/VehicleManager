@@ -41,8 +41,14 @@ public class LicensePlateManager {
 
     //MODIFIES: this
     //EFFECTS:  decides what to do with the user input;
-    //          if user inputs add then it should call the addVehicleHelper() method;
+    //          if user inputs add then it should call the addLicensePlateListName() method;
+    //          if user inputs ctype then it should call the addVechColourAndType() method;
+    //          if user inputs model then it should call the addVechModel() method;
+    //          if user inputs use then it should call the addVechPrivateOrCom() method;
+    //          if user inputs comment then it should call the addVechComment() method;
     //          if user inputs show then it should call the displayLicensePlates() method;
+    //          if user inputs attributes then it should call the displayLpAtts() method;
+    //          if user inputs anything else then it should print a string indicating its a wrong input;
     private void action(String userInput) {
         if (userInput.equals("add")) {
             addLicensePlateListName();
@@ -66,7 +72,8 @@ public class LicensePlateManager {
 
     //EFFECTS:  prints menu interface;
     private void activity() {
-        System.out.println("User must enter the correct license plate everytime.");
+        System.out.println("**User must enter the correct license plate everytime.");
+        System.out.println("**User is limited to adding one unique detail per license plate.");
         System.out.println("Make action:");
         System.out.println("-Enter Add to add a new license plate.");
         System.out.println("-Enter CType to add colour and type to your Vehicle. (Black Car/ White Truck)");
@@ -78,6 +85,7 @@ public class LicensePlateManager {
         System.out.println("-Enter Close to quit.");
     }
 
+    //MODIFIES: lp
     //EFFECTS:  initializes a VehicleAttributes object using vehicleColourAndTypeInput,vehicleModelInput
     //          and vehicleCommentInput inputs from user;
     //          initializes LicensePlateList and uses insertLicensePlate;
@@ -102,6 +110,7 @@ public class LicensePlateManager {
         }
     }
 
+    //MODIFIES: lp
     //EFFECTS:  displays all the added license plates and it's information that is mapped to it;
     private void displayLpAtts() {
         lp = getUserInputLicensePlate();
@@ -109,7 +118,7 @@ public class LicensePlateManager {
         System.out.println(lp.getVehicleAttributes().toString());
     }
 
-    //EFFECTS:  asks user which license plate and returns the license plate if it exists
+    //EFFECTS:  asks user which license plate and returns the license plate if it exists;
     private LicensePlateList getUserInputLicensePlate() {
         System.out.println("Which License Plate?");
         String userLp = scan.nextLine();
@@ -122,7 +131,9 @@ public class LicensePlateManager {
         return lp;
     }
 
-    //
+    //MODIFIES: lp
+    //EFFECTS:  calls getUserInputPlate();
+    //          initiates a vehicle and sets it's colour and type;
     private void addVechColourAndType() {
         lp = getUserInputLicensePlate();
 
@@ -132,8 +143,12 @@ public class LicensePlateManager {
 
         vech.setVehicleColourAndType(addedColourAndType);
         lp.addVehicleAttributes(vech);
+
     }
 
+    //MODIFIES: lp
+    //EFFECTS:  calls getUserInputPlate();
+    //          initiates a vehicle and sets it's model;
     private void addVechModel() {
         lp = getUserInputLicensePlate();
 
@@ -146,6 +161,9 @@ public class LicensePlateManager {
         lp.addVehicleAttributes(vech);
     }
 
+    //MODIFIES: lp
+    //EFFECTS:  calls getUserInputPlate();
+    //          initiates a vehicle and sets it's comment;
     private void addVechComment() {
         lp = getUserInputLicensePlate();
 
@@ -155,7 +173,6 @@ public class LicensePlateManager {
         String addedComment = scan.nextLine();
 
         lp.addVehicleAttributes(vech);
-      //  lp.setVehicleAttributes();
         vech.setVehicleComment(addedComment);
 
     }
@@ -174,6 +191,7 @@ public class LicensePlateManager {
     }
 
     //EFFECTS:  prints out all the license plates;
+    //          catches exception if theres a null array;
     private void showAllLicensePlates()  {
         System.out.println("All the license plates are as follows:");
         try {
@@ -184,7 +202,6 @@ public class LicensePlateManager {
         } catch (NullPointerException e) {
             System.out.println("No License plates added.");
         }
-
     }
 
 }
