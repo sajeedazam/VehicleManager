@@ -19,5 +19,6 @@ public class TestAllPlates {
         assertEquals(0,allPlates.getLp().size());
         allPlates.addLp(licensePlateList);
         assertEquals(1,allPlates.getLp().size());
+
     }
 }

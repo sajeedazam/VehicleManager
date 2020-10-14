@@ -10,6 +10,7 @@ public class LicensePlateListTest {
     LicensePlateList plate1;
     VehicleAttributes attributes1;
 
+
     @BeforeEach
     public void setUp() {
         plate1 = new LicensePlateList();
@@ -18,9 +19,18 @@ public class LicensePlateListTest {
 
     @Test
     public void testGetAndSetPlateWorks() {
-        assertNull(null,plate1.getPlate());
+        assertTrue(plate1.getVehicleAttributes().size()==0);
+        assertEquals(null,plate1.getPlate());
         plate1.setPlate("123-ABC");
         assertEquals("123-ABC",plate1.getPlate());
+        plate1.addVehicleAttributes(attributes1);
+        assertTrue(plate1.getVehicleAttributes().size()==1);
+    }
+
+    @Test
+    public void testSetPlateWorks() {
+        plate1.setPlate("123-ABC");
+        assertTrue(plate1.getPlate().equals("123-ABC"));
     }
 
     @Test
