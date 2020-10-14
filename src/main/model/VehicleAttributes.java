@@ -15,21 +15,16 @@ public class VehicleAttributes {
     //constructor
 
     /*MODIFIES: this
-     *EFFECTS:  license plate id is a positive integer not assigned to other license plates;
-     *          vehicleColourAndType is initialized as vehicleColourAndTypeInput;
-     *          vehicleModel is initialized as vehicleModelInput;
-     *          vehicleComment is initialized as vehicleComment;
+     *EFFECTS:  vehicleColourAndType is initialized as "Not set.";
+     *          vehicleModel is initialized as "Not set.";
+     *          vehicleComment is initialized as "Not set.";
      *          vehicleUse is initialized as "true" by default;
      */
-    public VehicleAttributes(String vehicleColourAndTypeInput, String vehicleModelInput, String vehicleComment) {
-        this.setVehicleColourAndType(vehicleColourAndTypeInput);
-        this.setVehicleModel(vehicleModelInput);
-        this.setVehicleComment(vehicleComment);
-        this.setVehicleIsPrivate(true);
-    }
-
     public VehicleAttributes() {
-
+        this.setVehicleColourAndType("Not set.");
+        this.setVehicleModel("Not set.");
+        this.setVehicleComment("Not set.");
+        this.setVehicleIsPrivate(true);
     }
     //methods
     //getters
@@ -64,7 +59,7 @@ public class VehicleAttributes {
     }
 
     //MODIFIES: this
-    //EFFECT: returns
+    //EFFECT: returns vehicleIsPrivate;
     public boolean isVehicleIsPrivate() {
         return this.vehicleIsPrivate;
     }
@@ -72,21 +67,25 @@ public class VehicleAttributes {
     //setters
 
     //MODIFIES: this
-    public void setVehicleColourAndType(String vehicleType) {
-        this.vehicleColourAndType = vehicleType;
+    //EFFECTS:  sets vehicleType;
+    public void setVehicleColourAndType(String vehicleColAndType) {
+        this.vehicleColourAndType = vehicleColAndType;
     }
 
     //MODIFIES: this
+    //EFFECTS:  sets vehicleModel;
     public void setVehicleModel(String vehicleModel) {
         this.vehicleModel = vehicleModel;
     }
 
     //MODIFIES: this
+    //EFFECTS:  sets vehicleComment
     public void setVehicleComment(String vehicleComment) {
         this.vehicleComment = vehicleComment;
     }
 
     //MODIFIES: this
+    //EFFECTS:  sets vehicleIsPrivate;
     public void setVehicleIsPrivate(boolean vehicleIsPrivate) {
         this.vehicleIsPrivate = vehicleIsPrivate;
     }
@@ -101,22 +100,4 @@ public class VehicleAttributes {
                 + this.getVehiclePrivateOrNot() + '}';
     }
 
-    //IGNORE BELOW METHOD
-    /*REQUIRES: licensePlate[].equals(checker);
-     *EFFECTS:  this method is a helper method for the constructor that checks if the
-     *          input of the user already exists in the licensePlate Array so that there are
-     *          no duplications of the same license plate.
-     */
-//    public boolean checkPlateExists(String checker) {
-//
-//        for (String i : licensePlate) {
-//            if (licensePlate[Integer.parseInt(i)].equals(checker)) {
-//                continue;
-//            }
-//            return true;
-//        }
-//
-//        return false;
-//    }
-    //IGNORE ABOVE METHOD
 }

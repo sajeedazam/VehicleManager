@@ -18,39 +18,30 @@ public class LicensePlateList {
         vehicleAttributes = new ArrayList<>();
     }
 
+    //EFFECTS: returns plate;
     public String getPlate() {
         return plate;
     }
 
+    //EFFECTS:  sets plate;
     public void setPlate(String plate) {
         this.plate = plate;
     }
+
     //EFFECTS:  returns the VehicleAttributes from the ArrayList;
     public List<VehicleAttributes> getVehicleAttributes() {
         return vehicleAttributes;
     }
 
-    public void setVehicleAttributes(List<VehicleAttributes> vehicleAttributes) {
-        this.vehicleAttributes = vehicleAttributes;
-    }
+    //EFFECTS:  sets vehicle attributes;
+//    public void setVehicleAttributes(List<VehicleAttributes> vehicleAttributes) {
+//        this.vehicleAttributes = vehicleAttributes;
+//    }
 
+    //EFFECTS:  adds vehicle attributes;
     public void addVehicleAttributes(VehicleAttributes vehicleAttribute) {
         vehicleAttributes.add(vehicleAttribute);
     }
 
-    //    //EFFECTS:  returns the License Plate;
-//    public String getLicensePlateList() {
-//        return plate;
-//    }
-//
-//    //EFFECTS:  adds VehicleAttributes to the ArrayList;
 
-//
-
-
-
-//    private void displayLicensePlates() {
-//        List<VehicleAttributes> vehicleAttributes = getVehicleAttributes();
-//
-//    }
 }
