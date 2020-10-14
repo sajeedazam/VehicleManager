@@ -28,53 +28,71 @@ public class VehicleAttributes {
         this.setVehicleIsPrivate(true);
     }
 
+    public VehicleAttributes() {
+
+    }
     //methods
     //getters
 
+    //MODIFIES: this
+    //EFFECT: returns vehicle colour and type
     public String getVehicleColourAndType() {
-        return vehicleColourAndType;
+        return this.vehicleColourAndType;
     }
 
+    //MODIFIES: this
+    //EFFECT: returns vehicle model
     public String getVehicleModel() {
-        return vehicleModel;
+        return this.vehicleModel;
     }
 
+    //MODIFIES: this
+    //EFFECT: returns comment on vehicle
     public String getVehicleComment() {
-        return vehicleComment;
+        return this.vehicleComment;
     }
 
+    //MODIFIES: this
+    //EFFECT:   returns "Vehicle of Commercial use." if isVehiclePrivate is false.
+    //          returns "Vehicle of Private use." if isVehiclePrivate is true.
     public String getVehiclePrivateOrNot() {
-        if (this.isVehicleIsPrivate() == false) {
+        if (!(this.isVehicleIsPrivate())) {
             return "Vehicle is of Commercial use.";
         } else {
             return "Vehicle is of Private use.";
         }
     }
 
+    //MODIFIES: this
+    //EFFECT: returns
     public boolean isVehicleIsPrivate() {
-        return vehicleIsPrivate;
+        return this.vehicleIsPrivate;
     }
 
     //setters
 
+    //MODIFIES: this
     public void setVehicleColourAndType(String vehicleType) {
         this.vehicleColourAndType = vehicleType;
     }
 
+    //MODIFIES: this
     public void setVehicleModel(String vehicleModel) {
         this.vehicleModel = vehicleModel;
     }
 
-
+    //MODIFIES: this
     public void setVehicleComment(String vehicleComment) {
         this.vehicleComment = vehicleComment;
     }
 
+    //MODIFIES: this
     public void setVehicleIsPrivate(boolean vehicleIsPrivate) {
         this.vehicleIsPrivate = vehicleIsPrivate;
     }
 
-
+    //MODIFIES: this
+    //EFFECTS:  returns the toString() of VehicleAttributes;
     @Override
     public String toString() {
         return "Vehicle Attributes { Colour and Type ='"

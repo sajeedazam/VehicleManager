@@ -1,18 +1,17 @@
 package ui;
 
+import model.AllPlates;
 import model.LicensePlateList;
 import model.VehicleAttributes;
-
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 //License Plate Manager Application
 public class LicensePlateManager {
 
     //fields
-    HashMap<String, LicensePlateList> licensePlatesLists = new LinkedHashMap<>();
+    private AllPlates allPlates;
+    private VehicleAttributes vech;
+    private LicensePlateList lp;
     private final Scanner scan = new Scanner(System.in);
 
     //EFFECT: runs the LicensePlateManager application.
@@ -20,12 +19,13 @@ public class LicensePlateManager {
         runLicensePlateManager();
     }
 
+    //EFFECTS: Processes user input
     private void runLicensePlateManager() {
         boolean runApp = true;
         String userInput;
         do {
             activity();
-            userInput = scan.next();
+            userInput = scan.nextLine();
             userInput = userInput.toLowerCase();
 
             if (userInput.equals("close")) {
@@ -39,16 +39,21 @@ public class LicensePlateManager {
         System.out.println("LicensePlateManager closed.");
     }
 
+    //MODIFIES: this
+    //EFFECTS:  decides what to do with the user input;
+    //          if user inputs add then it should call the addVehicleHelper() method;
+    //          if user inputs show then it should call the displayLicensePlates() method;
     private void action(String userInput) {
         if (userInput.equals("add")) {
             addVehicleAttributesHelper();
             System.out.println("Vehicle successfully added.");
         }
         if (userInput.equals("show")) {
-            displayLicensePlates();
+            this.displayLicensePlates();
         }
     }
 
+    //EFFECTS:  prints menu interface;
     private void activity() {
         System.out.println("Make action:");
         System.out.println("-Enter Add to add a new license plate.");
@@ -56,67 +61,104 @@ public class LicensePlateManager {
         System.out.println("-Enter Close to quit.");
     }
 
-    private void addLicensePlate(String insertLicensePlate) {
-        LicensePlateList plates = new LicensePlateList(insertLicensePlate);
-        licensePlatesLists.put(insertLicensePlate,plates);
-    }
+    //EFFECTS:  initializes a new LicensePlateList object using the insertLicensePlate input from user;
+//    private void addLicensePlate(String insertLicensePlate) {
+//        LicensePlateList plates = new LicensePlateList(insertLicensePlate);
+//        licensePlatesLists.put(insertLicensePlate,plates);
+//    }
 
-    private void addVehicleAttributes(String insertLicensePlate, String vehicleColourAndTypeInput,
-                                      String vehicleModelInput, String vehicleCommentInput) {
-        VehicleAttributes newVehicle
-                = new VehicleAttributes(vehicleColourAndTypeInput,vehicleModelInput,vehicleCommentInput);
-        LicensePlateList plates = new LicensePlateList(insertLicensePlate);
-        plates.addVehicleAttributes(newVehicle);
+    //EFFECTS:  initializes a VehicleAttributes object using vehicleColourAndTypeInput,vehicleModelInput
+    //          and vehicleCommentInput inputs from user;
+    //          initializes LicensePlateList and uses insertLicensePlate;
+    //          maps the VehiclesAttributes object inside the LicensePlateList by using addVehicleAttribute();
+    //          prompts user to declare if the vehicle is of private or commercial use and sets it;
+    private void addVechPrivateOrCom() {
 
         String answer = "";
         while (!(answer.equals("private") || answer.equals("commercial"))) {
             System.out.println("Enter Private if vehicle is for private use, commercial otherwise.");
-            answer = scan.next();
+            answer = scan.nextLine();
             answer = answer.toLowerCase();
         }
 
         if (answer.equals("private")) {
-            newVehicle.setVehicleIsPrivate(true);
+            vech.setVehicleIsPrivate(true);
         } else {
-            newVehicle.setVehicleIsPrivate(false);
+            vech.setVehicleIsPrivate(false);
         }
     }
 
+    //EFFECTS:  displays all the added license plates and it's information that is mapped to it;
     private void displayLicensePlates() {
 
-        for (Map.Entry<String, LicensePlateList> entry : licensePlatesLists.entrySet()) {
-            LicensePlateList plates = entry.getValue();
-            System.out.println("License Plate: " + plates.getLicensePlateList());
-            System.out.println(plates.getVehicleAttributes());
-        }
 
     }
 
+    //EFFECTS:  prompts user to enter all the required vehicle attributes and it's license plate;
+    //          calls the addLicensePlate() method with the user's inserted license plate;
+    //          calls the addVehicleAttributes() method with all the necessary inputs from the user into
+    //          it's parameters;
     private void addVehicleAttributesHelper() {
         System.out.println("Enter the license plate: ");
-        String addedLicensePlate = scan.next();
+        licensePlateListName();
 
-        System.out.println("Enter vehicle colour: ");
-        String addedColour = scan.next();
 
-        System.out.println("Enter vehicle Type: (Bike / Sedan / Truck)");
-        String addedType = scan.next();
+        addVechColourAndType();
 
-        System.out.println("Enter vehicle model: (Nissan / Toyota / Whatever applies)");
-        String addedVehicleModel = scan.next();
+        addVechModel();
 
-        System.out.println("Enter vehicle comment:");
-        String addedVehicleComment = scan.next();
+        addVechComment();
 
-        String addedVehicleColourAndType = addedColour + " " + addedType;
-
-        addedLicensePlate = addedLicensePlate.toUpperCase();
-        addLicensePlate(addedLicensePlate);
-        addVehicleAttributes(addedLicensePlate,addedVehicleColourAndType,
-                addedVehicleModel,addedVehicleComment);
+        addVechPrivateOrCom();
 
 
     }
+
+    private LicensePlateList getUserInputLicensePlate() {
+        System.out.println("Which License Plate?");
+        String userLp = scan.nextLine();
+        userLp = userLp.toUpperCase();
+        for (LicensePlateList lp : allPlates.getLp()) {
+            if (lp.getPlate().equals(userLp)) {
+                return lp;
+            }
+        }
+        return lp;
+    }
+
+
+    private void addVechColourAndType() {
+        lp = getUserInputLicensePlate();
+        System.out.println("Enter vehicle colour and type: (Black Bike/ White Car)");
+        String addedColourAndType = scan.nextLine();
+        vech.setVehicleColourAndType(addedColourAndType);
+        lp.addVehicleAttributes(vech);
+    }
+
+    private void addVechModel() {
+        lp = getUserInputLicensePlate();
+        System.out.println("Enter vehicle model: (Nissan / Toyota / Whatever applies)");
+        String addedModel = scan.nextLine();
+        vech.setVehicleModel(addedModel);
+        lp.addVehicleAttributes(vech);
+    }
+
+    private void addVechComment() {
+        lp = getUserInputLicensePlate();
+        System.out.println("Enter vehicle comment:");
+        String addedComment = scan.nextLine();
+        vech.setVehicleComment(addedComment);
+        lp.addVehicleAttributes(vech);
+    }
+
+    private void licensePlateListName() {
+        lp = new LicensePlateList();
+        String addedLicensePlate = scan.nextLine();
+        addedLicensePlate = addedLicensePlate.toUpperCase();
+        lp.setPlate(addedLicensePlate);
+        allPlates.addLp(lp);
+    }
+
 
     //IGNORE BELOW METHODS
 //    private void returnMenu() {
