@@ -48,7 +48,7 @@ benefit the user.
  application would not alter that a lot, but it still may cause a positive impact of sorts if anything. However, this
  application may always be used regardless; for practical use too.
   
-## User Stories
+## User Stories (Phase 1)
 
 - As a user, I want to be able to add as many license plates as I want.
 - As a user, I want to be able to declare what colour and type (bike / sedan / truck) of vehicle it is as a unique
@@ -59,3 +59,8 @@ benefit the user.
 - As a user, I want to be able to view my license plate's corresponding information.
 - As a user, I want to be able to view all my added license plates.
 - As a user, I want to be able to close the application after I am done.
+
+## User Stories (Phase 2)
+
+- As a user, I want to be able to save all my added license plates.
+- As a user, I want to be able to load all my added license plates.

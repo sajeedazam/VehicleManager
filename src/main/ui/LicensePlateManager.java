@@ -3,9 +3,15 @@ package ui;
 import model.AllPlates;
 import model.LicensePlateList;
 import model.VehicleAttributes;
+import persistance.JsonReader;
+import persistance.JsonWriter;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
+//JSON citation: JsonSerializationDemo
 //License Plate Manager Application
 public class LicensePlateManager {
 
@@ -13,9 +19,14 @@ public class LicensePlateManager {
     private AllPlates allPlates = new AllPlates();
     private LicensePlateList lp = new LicensePlateList();
     private final Scanner scan = new Scanner(System.in);
+    private static final String JSON_STORE = "./data/workroom.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     //EFFECT: runs the LicensePlateManager application.
     public LicensePlateManager() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runLicensePlateManager();
     }
 
@@ -65,24 +76,51 @@ public class LicensePlateManager {
             showAllLicensePlates();
         } else if (userInput.equals("attributes")) {
             displayLpAtts();
+        } else if (userInput.equals("save")) {
+            savePlates();
+        } else if (userInput.equals("load")) {
+            loadPlates();
         } else {
             System.out.println("Invalid input. Try something else.");
         }
     }
 
+    //EFFECTS:  loads plates from the file;
+    private void loadPlates() {
+        try {
+            allPlates = jsonReader.read();
+            System.out.println("Loaded");
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+    //EFFECTS:  saves plates to the file;
+    private void savePlates() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(allPlates);
+            jsonWriter.close();
+            System.out.println("Saved");
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
     //EFFECTS:  prints menu interface;
     private void activity() {
-        System.out.println("**User must enter the correct license plate everytime.");
         System.out.println("**User is limited to adding one unique detail per license plate.");
         System.out.println("Make action:");
-        System.out.println("-Enter Add to add a new license plate.");
-        System.out.println("-Enter CType to add colour and type to your Vehicle. (Black Car/ White Truck)");
-        System.out.println("-Enter Model to add brand name to your Vehicle.");
-        System.out.println("-Enter Use to declare use of a Vehicle.");
-        System.out.println("-Enter Comment to comment on a Vehicle.");
-        System.out.println("-Enter Show to display all the license plates.");
-        System.out.println("-Enter Attributes to display vehicle attributes.");
-        System.out.println("-Enter Close to quit.");
+        System.out.println("\t-Enter Add to add a new license plate.");
+        System.out.println("\t-Enter CType to add colour and type to your Vehicle. (Black Car/ White Truck)");
+        System.out.println("\t-Enter Model to add brand name to your Vehicle.");
+        System.out.println("\t-Enter Use to declare use of a Vehicle.");
+        System.out.println("\t-Enter Comment to comment on a Vehicle.");
+        System.out.println("\t-Enter Show to display all the license plates.");
+        System.out.println("\t-Enter Attributes to display vehicle attributes.");
+        System.out.println("\t-Enter Save to save work to file.");
+        System.out.println("\t-Enter Load to load work from file.");
+        System.out.println("\t-Enter Close to quit.");
     }
 
     //MODIFIES: lp
@@ -93,20 +131,23 @@ public class LicensePlateManager {
     //          prompts user to declare if the vehicle is of private or commercial use and sets it;
     private void addVechPrivateOrCom() {
         lp = getUserInputLicensePlate();
-
         VehicleAttributes vech = new VehicleAttributes();
 
-        String answer = "";
-        while (!(answer.equals("private") || answer.equals("commercial"))) {
-            System.out.println("Enter Private if vehicle is for private use, commercial otherwise.");
-            answer = scan.nextLine();
-            answer = answer.toLowerCase();
-        }
-
-        if (answer.equals("private")) {
-            vech.setVehicleIsPrivate(true);
+        if (lp == null) {
+            System.out.println("License Plate does not exist.");
         } else {
-            vech.setVehicleIsPrivate(false);
+            String answer = "";
+            while (!(answer.equals("private") || answer.equals("commercial"))) {
+                System.out.println("Enter Private if vehicle is for private use, commercial otherwise.");
+                answer = scan.nextLine();
+                answer = answer.toLowerCase();
+            }
+            if (answer.equals("private")) {
+                vech.setVehicleIsPrivate(true);
+            } else {
+                vech.setVehicleIsPrivate(false);
+            }
+            lp.addVehicleAttributes(vech);
         }
     }
 
@@ -114,8 +155,11 @@ public class LicensePlateManager {
     //EFFECTS:  displays all the added license plates and it's information that is mapped to it;
     private void displayLpAtts() {
         lp = getUserInputLicensePlate();
-
-        System.out.println(lp.getVehicleAttributes().toString());
+        if (lp == null) {
+            System.out.println("License Plate does not exist.");
+        } else {
+            System.out.println(lp.getVehicleAttributes().toString());
+        }
     }
 
     //EFFECTS:  asks user which license plate and returns the license plate if it exists;
@@ -123,27 +167,24 @@ public class LicensePlateManager {
         System.out.println("Which License Plate?");
         String userLp = scan.nextLine();
         userLp = userLp.toUpperCase();
-        for (LicensePlateList lp : allPlates.getLp()) {
-            if (lp.getPlate().equals(userLp)) {
-                return lp;
-            }
-        }
-        return lp;
+        return allPlates.searchPlate(userLp,allPlates);  //updated code: removed from ui and added to model
     }
 
     //MODIFIES: lp
-    //EFFECTS:  calls getUserInputPlate();
+    //EFFECTS:  calls getUserInputLicensePlate();
     //          initiates a vehicle and sets it's colour and type;
     private void addVechColourAndType() {
         lp = getUserInputLicensePlate();
-
         VehicleAttributes vech = new VehicleAttributes();
-        System.out.println("Enter vehicle colour and type: (Black Bike/ White Car)");
-        String addedColourAndType = scan.nextLine();
 
-        vech.setVehicleColourAndType(addedColourAndType);
-        lp.addVehicleAttributes(vech);
-
+        if (lp == null) {
+            System.out.println("License Plate does not exist.");
+        } else {
+            System.out.println("Enter vehicle colour and type: (Black Bike/ White Car)");
+            String addedColourAndType = scan.nextLine();
+            vech.setVehicleColourAndType(addedColourAndType);
+            lp.addVehicleAttributes(vech);
+        }
     }
 
     //MODIFIES: lp
@@ -151,14 +192,16 @@ public class LicensePlateManager {
     //          initiates a vehicle and sets it's model;
     private void addVechModel() {
         lp = getUserInputLicensePlate();
-
         VehicleAttributes vech = new VehicleAttributes();
 
-        System.out.println("Enter vehicle model: (Nissan / Toyota / Whatever applies)");
-        String addedModel = scan.nextLine();
-
-        vech.setVehicleModel(addedModel);
-        lp.addVehicleAttributes(vech);
+        if (lp == null) {
+            System.out.println("License Plate does not exist.");
+        } else {
+            System.out.println("Enter vehicle model: (Nissan / Toyota / Whatever applies)");
+            String addedModel = scan.nextLine();
+            vech.setVehicleModel(addedModel);
+            lp.addVehicleAttributes(vech);
+        }
     }
 
     //MODIFIES: lp
@@ -166,15 +209,16 @@ public class LicensePlateManager {
     //          initiates a vehicle and sets it's comment;
     private void addVechComment() {
         lp = getUserInputLicensePlate();
-
         VehicleAttributes vech = new VehicleAttributes();
 
-        System.out.println("Enter vehicle comment:");
-        String addedComment = scan.nextLine();
-
-        lp.addVehicleAttributes(vech);
-        vech.setVehicleComment(addedComment);
-
+        if (lp == null) {
+            System.out.println("License Plate does not exist.");
+        } else {
+            System.out.println("Enter vehicle comment:");
+            String addedComment = scan.nextLine();
+            lp.addVehicleAttributes(vech);
+            vech.setVehicleComment(addedComment);
+        }
     }
 
     //EFFECTS:  prompts user to enter all the required vehicle attributes and it's license plate;
@@ -192,7 +236,7 @@ public class LicensePlateManager {
 
     //EFFECTS:  prints out all the license plates;
     //          catches exception if theres a null array;
-    private void showAllLicensePlates()  {
+    private void showAllLicensePlates() {
         System.out.println("All the license plates are as follows:");
         try {
             List<LicensePlateList> allLp = allPlates.getLp();

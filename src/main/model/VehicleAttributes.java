@@ -1,10 +1,12 @@
 package model;
 
-import java.util.Arrays;
+import org.json.JSONObject;
+import persistance.Writable;
 
+//citation: json implementations from JsonSerializationDemo
 //Represents a License Plate having License Plate number, type of vehicle, model of vehicle,
 //colour of vehicle, declare commercial or private, add comment/complaint
-public class VehicleAttributes {
+public class VehicleAttributes implements Writable {
 
     //fields
     private String vehicleColourAndType;        // colour and type of the vehicle (i.e black sedan, white truck,etc)
@@ -100,4 +102,13 @@ public class VehicleAttributes {
                 + this.getVehiclePrivateOrNot() + '}';
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("ctype",vehicleColourAndType);
+        json.put("model",vehicleModel);
+        json.put("comment",vehicleComment);
+        json.put("use",vehicleIsPrivate);
+        return json;
+    }
 }

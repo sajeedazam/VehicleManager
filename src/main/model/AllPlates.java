@@ -1,10 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistance.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
+//citation: json implementations from JsonSerializationDemo
 //this class stores all the license plates being made as an arraylist
-public class AllPlates {
+public class AllPlates implements Writable {
 
     //fields
     List<LicensePlateList> lp;
@@ -24,4 +29,29 @@ public class AllPlates {
         lp.add(lp0);
     }
 
+    //EFFECTS: searches for the license plate and returns it;
+    public LicensePlateList searchPlate(String userLp,AllPlates allPlates) {
+        for (LicensePlateList lp : allPlates.getLp()) {
+            if (lp.getPlate().equals(userLp)) {
+                return lp;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("allPlates", allPlatesToJson());
+        return json;
+    }
+
+    //EFFECTS:  return allPlates as json array;
+    private JSONArray allPlatesToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (LicensePlateList plate : lp) {
+            jsonArray.put(plate.toJson());
+        }
+        return jsonArray;
+    }
 }
