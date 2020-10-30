@@ -19,7 +19,7 @@ public class LicensePlateManager {
     private AllPlates allPlates = new AllPlates();
     private LicensePlateList lp = new LicensePlateList();
     private final Scanner scan = new Scanner(System.in);
-    private static final String JSON_STORE = "./data/workroom.json";
+    private static final String JSON_STORE = "./data/LicensePlateManager.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 

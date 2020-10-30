@@ -7,22 +7,21 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class JsonWriterTest {
-    AllPlates allPlates;
-    LicensePlateList licensePlateList;
-    VehicleAttributes vehicleAttributes;
-
-    @BeforeEach
-    public void setUp() {
-        allPlates = new AllPlates();
-        licensePlateList = new LicensePlateList();
-        vehicleAttributes = new VehicleAttributes();
-    }
+public class JsonWriterTest extends JsonTest{
+//    AllPlates allPlates;
+//    LicensePlateList licensePlateList;
+//    VehicleAttributes vehicleAttributes;
+//
+//    @BeforeEach
+//    public void setUp() {
+//        allPlates = new AllPlates();
+//        licensePlateList = new LicensePlateList();
+//        vehicleAttributes = new VehicleAttributes();
+//    }
 
     @Test
     void testWriterInvalidFile() {
@@ -38,15 +37,14 @@ public class JsonWriterTest {
     @Test
     void testWriterEmptyAllPlates() {
         try {
-            allPlates.addLp(licensePlateList);
-            JsonWriter writer = new JsonWriter("./data/testWriterEmptyWorkroom.json");
+            AllPlates allPlates = new AllPlates();
+            JsonWriter writer = new JsonWriter("./data/testWriterEmptyAllPlates.json");
             writer.open();
             writer.write(allPlates);
             writer.close();
 
-            JsonReader reader = new JsonReader("./data/testWriterEmptyWorkroom.json");
+            JsonReader reader = new JsonReader("./data/testWriterEmptyAllPlates.json");
             allPlates = reader.read();
-            assertEquals(licensePlateList, allPlates.getLp());
             assertEquals(0, allPlates.getLp().size());
         } catch (IOException e) {
             fail("Exception should not have been thrown");
@@ -56,25 +54,20 @@ public class JsonWriterTest {
     @Test
     void testWriterGeneralAllPlates() {
         try {
+            AllPlates allPlates = new AllPlates();
+            LicensePlateList licensePlateList = new LicensePlateList();
             licensePlateList.setPlate("123ABC");
-            vehicleAttributes.setVehicleColourAndType("Black sedan");
-            vehicleAttributes.setVehicleIsPrivate(true);
-            vehicleAttributes.setVehicleComment("Commented");
-            vehicleAttributes.setVehicleModel("Nissan");
-            licensePlateList.addVehicleAttributes(vehicleAttributes);
-            JsonWriter writer = new JsonWriter("./data/testWriterGeneralWorkroom.json");
+            allPlates.addLp(licensePlateList);
+            JsonWriter writer = new JsonWriter("./data/testWriterGeneralAllPlates.json");
             writer.open();
             writer.write(allPlates);
             writer.close();
 
-            JsonReader reader = new JsonReader("./data/testWriterGeneralWorkroom.json");
+            JsonReader reader = new JsonReader("./data/testWriterGeneralAllPlates.json");
             allPlates = reader.read();
-//          assertEquals("My work room", allPlates.getLp());
- //         List<Thingy> thingies = wr.getThingies();
             assertEquals(1, allPlates.getLp().size());
-//            checkThingy("saw", Category.METALWORK, thingies.get(0));
-//            checkThingy("needle", Category.STITCHING, thingies.get(1));
-
+            checkVehicleAtributes("Not set.","Not set.","Not set.",true);
+            checkAllPlates(licensePlateList,"123ABC");
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }

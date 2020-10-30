@@ -27,6 +27,5 @@ public class AllPlatesTest {
         licensePlateList.setPlate("123ABC");
         allPlates.addLp(licensePlateList);
         assertEquals(licensePlateList.getPlate(),allPlates.searchPlate("123ABC",allPlates).getPlate());
-
     }
 }
