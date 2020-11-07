@@ -1,10 +1,12 @@
 package model;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistance.Writable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 //citation: json implementations from JsonSerializationDemo
@@ -54,4 +56,9 @@ public class AllPlates implements Writable {
         }
         return jsonArray;
     }
+
+    public List<LicensePlateList> getLicensePlateList() {
+        return Collections.unmodifiableList(lp);
+    }
+
 }

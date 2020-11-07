@@ -59,6 +59,8 @@ public class LicensePlateManager {
     //          if user inputs comment then it should call the addVechComment() method;
     //          if user inputs show then it should call the displayLicensePlates() method;
     //          if user inputs attributes then it should call the displayLpAtts() method;
+    //          if user inputs save then it should call the savePlates() method;
+    //          if user inputs load then it should call the loadPlates() method;
     //          if user inputs anything else then it should print a string indicating its a wrong input;
     private void action(String userInput) {
         if (userInput.equals("add")) {
@@ -221,6 +223,7 @@ public class LicensePlateManager {
         }
     }
 
+    //MODIFIES: lp
     //EFFECTS:  prompts user to enter all the required vehicle attributes and it's license plate;
     //          calls the addLicensePlate() method with the user's inserted license plate;
     //          calls the addVehicleAttributes() method with all the necessary inputs from the user into
