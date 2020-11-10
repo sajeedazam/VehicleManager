@@ -2,7 +2,6 @@ package persistance;
 
 import model.AllPlates;
 import model.LicensePlateList;
-import model.VehicleAttributes;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

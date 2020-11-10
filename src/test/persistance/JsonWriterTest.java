@@ -3,14 +3,12 @@ package persistance;
 import com.sun.org.apache.bcel.internal.generic.ALOAD;
 import model.AllPlates;
 import model.LicensePlateList;
-import model.VehicleAttributes;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.fail;
 
 //citation: from JsonSerializationDemo
@@ -61,6 +59,7 @@ public class JsonWriterTest extends JsonTest{
 
             JsonReader reader = new JsonReader("./data/testWriterGeneralAllPlates.json");
             allPlates = reader.read();
+
             List<LicensePlateList> licensePlateLists2 = allPlates.getLicensePlateList();
             assertEquals(2, allPlates.getLp().size());
             checkVehicleAtributes("Not set.","Not set.","Not set.",true,vehicleAttributes);
