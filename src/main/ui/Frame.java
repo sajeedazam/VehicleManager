@@ -9,17 +9,21 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import sun.audio.*;
 
+//https://www.youtube.com/watch?v=VMSTTg5EEnY&ab_channel=MrJavaHelp for music
 //https://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon (lines 48-51)
 public class Frame extends JFrame implements ActionListener {
 
     //fields
-    AllPlates plates = new AllPlates();
-    LicensePlateList licensePlateList;
-    JsonWriter jsonWriter;
-    JsonReader jsonReader;
+    protected AllPlates plates;
+    private LicensePlateList licensePlateList;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+    private static final String JSON_STORE = "./data/LicensePlateManager.json";
     JLabel labelWelcomeHeader;
     JPanel panel;
     JButton addPlateButton;
@@ -39,29 +43,31 @@ public class Frame extends JFrame implements ActionListener {
         save = new JRadioButton();
         addPlateButton = new JButton();
         buttonGroup = new ButtonGroup();
-        jsonReader = new JsonReader("./data/LicensePlateManager.json");
-        jsonWriter = new JsonWriter("./data/LicensePlateManager.json");
+        jsonReader = new JsonReader(JSON_STORE);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        licensePlateList = new LicensePlateList();
+        plates = new AllPlates();
 
         //images: imported and resized
         ImageIcon logo = new ImageIcon("LicensePlateManagerAppLogo.png");
         this.setIconImage(logo.getImage());
         ImageIcon platePic = new ImageIcon("AddLicensePlate.png");
         Image image = platePic.getImage();
-        Image newimg = image.getScaledInstance(60, 60,  java.awt.Image.SCALE_SMOOTH);
-        platePic = new ImageIcon(newimg);
+        Image newImage = image.getScaledInstance(60, 60,  java.awt.Image.SCALE_SMOOTH);
+        platePic = new ImageIcon(newImage);
         Border border = BorderFactory.createLineBorder(new Color(0x071C4B),4);
         ImageIcon displayIcon = new ImageIcon("DisplayButton.png");
         Image image0 = displayIcon.getImage();
-        Image newimg0 = image0.getScaledInstance(35, 35,  java.awt.Image.SCALE_SMOOTH);
-        displayIcon = new ImageIcon(newimg0);
+        Image newImage0 = image0.getScaledInstance(35, 35,  java.awt.Image.SCALE_SMOOTH);
+        displayIcon = new ImageIcon(newImage0);
         ImageIcon loadIcon = new ImageIcon("LoadButton.png");
         Image image1 = loadIcon.getImage();
-        Image newimg1 = image1.getScaledInstance(22, 22,  java.awt.Image.SCALE_SMOOTH);
-        loadIcon = new ImageIcon(newimg1);
+        Image newImage1 = image1.getScaledInstance(22, 22,  java.awt.Image.SCALE_SMOOTH);
+        loadIcon = new ImageIcon(newImage1);
         ImageIcon saveIcon = new ImageIcon("SaveButton.png");
         Image image2 = saveIcon.getImage();
-        Image newimg2 = image2.getScaledInstance(22, 22,  java.awt.Image.SCALE_SMOOTH);
-        saveIcon = new ImageIcon(newimg2);
+        Image newImage2 = image2.getScaledInstance(22, 22,  java.awt.Image.SCALE_SMOOTH);
+        saveIcon = new ImageIcon(newImage2);
 
         //text filed for user input
         textField.setBounds(145,200,150,27);
@@ -146,13 +152,29 @@ public class Frame extends JFrame implements ActionListener {
         this.add(panel);
     }
 
+    private void music() {
+        AudioPlayer audioPlayer = AudioPlayer.player;
+        AudioStream audioStream;
+        AudioData audioData;
+        AudioDataStream stream = null;
+        try {
+            audioStream = new AudioStream(new FileInputStream("DingSound.wav"));
+            audioData = audioStream.getData();
+            stream = new AudioDataStream(audioData);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        audioPlayer.start(stream);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addPlateButton) {
             String plate = textField.getText().toUpperCase();
-            licensePlateList = new LicensePlateList();
             licensePlateList.setPlate(plate);
             plates.addLp(licensePlateList);
+            music();
         } else if (e.getSource() == display) {
             new ShowPlateGUI(plates);
         } else if (e.getSource() == load) {
@@ -169,7 +191,6 @@ public class Frame extends JFrame implements ActionListener {
             } catch (FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
             }
-
         }
     }
 }
