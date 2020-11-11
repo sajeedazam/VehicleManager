@@ -1,5 +1,7 @@
 package ui;
 
+import model.AllPlates;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,8 +10,10 @@ public class ShowPlateGUI {
     JLabel label = new JLabel("Your plates");
     JPanel panel = new JPanel();
 
-    ShowPlateGUI() {
 
+    ShowPlateGUI(AllPlates plates) {
+        ImageIcon logo = new ImageIcon("LicensePlateManagerAppLogo.png");
+        frame.setIconImage(logo.getImage());
 
         label.setBounds(0,0,100,75);
         label.setHorizontalTextPosition(JLabel.CENTER);
