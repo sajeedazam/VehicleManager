@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import sun.audio.*;
 
+//this class is used to create and run the gui
 //https://www.youtube.com/watch?v=Kmgo00avvEw&ab_channel=BroCode for gui knowledge
 //https://www.youtube.com/watch?v=VMSTTg5EEnY&ab_channel=MrJavaHelp for music
 //https://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon for image resize
@@ -254,7 +255,7 @@ public class Swing extends JFrame implements ActionListener {
         }
     }
 
-    //MODIFIES: jsonWriter3
+    //MODIFIES: jsonWriter
     //EFFECTS:  performs the required action listener for the save radiobutton
     private void addSaveAction() {
         try {

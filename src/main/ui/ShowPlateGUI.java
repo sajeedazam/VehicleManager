@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
+//this class acts as a window displaying the number of plates added as well as listing the plates
 public class ShowPlateGUI {
 
     //fields
