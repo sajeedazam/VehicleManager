@@ -17,13 +17,13 @@ import sun.audio.*;
 //https://www.youtube.com/watch?v=Kmgo00avvEw&ab_channel=BroCode for gui knowledge
 //https://www.youtube.com/watch?v=VMSTTg5EEnY&ab_channel=MrJavaHelp for music
 //https://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon for image resize
-public class Frame extends JFrame implements ActionListener {
+public class Swing extends JFrame implements ActionListener {
 
     //fields
-    protected AllPlates plates;
+    private AllPlates plates;
     private LicensePlateList licensePlateList;
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+    private final JsonWriter jsonWriter;
+    private final JsonReader jsonReader;
     private static final String JSON_STORE = "./data/LicensePlateManager.json";
     JLabel labelWelcomeHeader;
     JPanel panel;
@@ -34,20 +34,18 @@ public class Frame extends JFrame implements ActionListener {
     JRadioButton save;
     ButtonGroup buttonGroup;
 
-
-    Frame() {
+    //EFFECTS:  constructs the GUI
+    Swing() {
         //initializations
         textField = new JTextField();
         buttonGroup = new ButtonGroup();
         jsonReader = new JsonReader(JSON_STORE);
         jsonWriter = new JsonWriter(JSON_STORE);
-        licensePlateList = new LicensePlateList();
         plates = new AllPlates();
 
         //images: imported and resized
-        ImageIcon logo = new ImageIcon("LicensePlateManagerAppLogo.png");
+        ImageIcon logo = new ImageIcon("./data/LicensePlateManagerAppLogo.png");
         this.setIconImage(logo.getImage());
-        Border border = BorderFactory.createLineBorder(new Color(0x071C4B),4);
 
         //text filed for user input
         textField.setBounds(145,200,150,27);
@@ -68,13 +66,14 @@ public class Frame extends JFrame implements ActionListener {
         this.add(panel);
     }
 
+    //EFFECTS:  plays the DingSound.wav audio
     private void dingSound() {
         AudioPlayer audioPlayer = AudioPlayer.player;
         AudioStream audioStream;
         AudioData audioData;
         AudioDataStream stream = null;
         try {
-            audioStream = new AudioStream(new FileInputStream("DingSound.wav"));
+            audioStream = new AudioStream(new FileInputStream("./data/DingSound.wav"));
             audioData = audioStream.getData();
             stream = new AudioDataStream(audioData);
         } catch (IOException e) {
@@ -83,13 +82,14 @@ public class Frame extends JFrame implements ActionListener {
         audioPlayer.start(stream);
     }
 
+    //EFFECTS:  plays the PopSound.wav audio
     private void popSound() {
         AudioPlayer audioPlayer = AudioPlayer.player;
         AudioStream audioStream;
         AudioData audioData;
         AudioDataStream stream = null;
         try {
-            audioStream = new AudioStream(new FileInputStream("PopSound.wav"));
+            audioStream = new AudioStream(new FileInputStream("./data/PopSound.wav"));
             audioData = audioStream.getData();
             stream = new AudioDataStream(audioData);
         } catch (IOException e) {
@@ -98,8 +98,9 @@ public class Frame extends JFrame implements ActionListener {
         audioPlayer.start(stream);
     }
 
+    //EFFECTS:  creates the top header of the app, adds logo and adds it to the panel
     private void setWelcomeHeader() {
-        ImageIcon platePic = new ImageIcon("AddLicensePlate.png");
+        ImageIcon platePic = new ImageIcon("./data/AddLicensePlate.png");
         Image image = platePic.getImage();
         Image newImage = image.getScaledInstance(60, 60,  java.awt.Image.SCALE_SMOOTH);
         platePic = new ImageIcon(newImage);
@@ -117,21 +118,23 @@ public class Frame extends JFrame implements ActionListener {
         this.add(labelWelcomeHeader);
     }
 
+    //EFFECTS:  creates the add button
     private void setAddPlateButton() {
         addPlateButton = new JButton();
         addPlateButton.setBounds(193,235,60,25);
-        addPlateButton.addActionListener(this);
-        addPlateButton.setText("Add");
-        addPlateButton.setFont(new Font("MV Boli",Font.PLAIN,15));
+        addPlateButton.addActionListener(e -> addPlateAction());
+        addPlateButton.setText("add");
+        addPlateButton.setFont(new Font("MV Boli",Font.PLAIN,13));
         addPlateButton.setFocusable(false);
         addPlateButton.setBackground(new Color(0x071C4B));
         addPlateButton.setForeground(Color.white);
         addPlateButton.setBorder(BorderFactory.createEtchedBorder());
     }
 
+    //EFFECTS:  creates display JRadioButton and adds an icon to it
     private void setDisplayButton() {
         display = new JRadioButton();
-        ImageIcon displayIcon = new ImageIcon("DisplayButton.png");
+        ImageIcon displayIcon = new ImageIcon("./data/DisplayButton.png");
         Image image0 = displayIcon.getImage();
         Image newImage0 = image0.getScaledInstance(35, 35,  java.awt.Image.SCALE_SMOOTH);
         displayIcon = new ImageIcon(newImage0);
@@ -142,14 +145,15 @@ public class Frame extends JFrame implements ActionListener {
         display.setForeground(Color.WHITE);
         display.setFont(new Font("MV Boli",Font.PLAIN,15));
         display.setFocusable(false);
-        display.addActionListener(this);
+        display.addActionListener(e -> addDisplayAction());
         display.setIcon(displayIcon);
         buttonGroup.add(display);
     }
 
+    //EFFECTS:  creates load JRadioButton and adds an icon to it
     private void setLoadButton() {
         load = new JRadioButton();
-        ImageIcon loadIcon = new ImageIcon("LoadButton.png");
+        ImageIcon loadIcon = new ImageIcon("./data/LoadButton.png");
         Image image1 = loadIcon.getImage();
         Image newImage1 = image1.getScaledInstance(22, 22,  java.awt.Image.SCALE_SMOOTH);
         loadIcon = new ImageIcon(newImage1);
@@ -160,14 +164,15 @@ public class Frame extends JFrame implements ActionListener {
         load.setForeground(Color.WHITE);
         load.setFont(new Font("MV Boli",Font.PLAIN,15));
         load.setFocusable(false);
-        load.addActionListener(this);
+        load.addActionListener(e -> addLoadAction());
         load.setIcon(loadIcon);
         buttonGroup.add(load);
     }
 
+    //EFFECTS:  creates save JRadioButton and adds an icon to it
     private void setSaveButton() {
         save = new JRadioButton();
-        ImageIcon saveIcon = new ImageIcon("SaveButton.png");
+        ImageIcon saveIcon = new ImageIcon("./data/SaveButton.png");
         Image image2 = saveIcon.getImage();
         Image newImage2 = image2.getScaledInstance(22, 22,  java.awt.Image.SCALE_SMOOTH);
         saveIcon = new ImageIcon(newImage2);
@@ -178,17 +183,21 @@ public class Frame extends JFrame implements ActionListener {
         save.setForeground(Color.WHITE);
         save.setFont(new Font("MV Boli",Font.PLAIN,15));
         save.setFocusable(false);
-        save.addActionListener(this);
+        save.addActionListener(e -> addSaveAction());
         save.setIcon(saveIcon);
         buttonGroup.add(save);
     }
 
-    private void addPlateAction(String plate) {
+    //EFFECTS:  performs the required action listener for the add button
+    private void addPlateAction() {
+        String plate = textField.getText().toUpperCase();
+        licensePlateList = new LicensePlateList();
         licensePlateList.setPlate(plate);
         plates.addLp(licensePlateList);
         dingSound();
     }
 
+    //EFFECTS:  adds whatever needed to the panel
     private void addToPanel(JPanel panel) {
         panel.add(labelWelcomeHeader);
         panel.add(addPlateButton);
@@ -198,6 +207,7 @@ public class Frame extends JFrame implements ActionListener {
         panel.add(load);
     }
 
+    //EFFECTS:  creates the panel
     private void setPanel() {
         panel = new JPanel();
         Border border = BorderFactory.createLineBorder(new Color(0x071C4B),4);
@@ -207,6 +217,7 @@ public class Frame extends JFrame implements ActionListener {
         panel.setBorder(border);
     }
 
+    //EFFECTS:  calls all the methods that makes up the GUI
     private void setInterface() {
         setWelcomeHeader();
         setAddPlateButton();
@@ -216,31 +227,39 @@ public class Frame extends JFrame implements ActionListener {
         setPanel();
     }
 
+    //EFFECTS:  performs the required action listener for the display radiobutton
+    private void addDisplayAction() {
+        new ShowPlateGUI(plates);
+        popSound();
+    }
+
+    //EFFECTS:  performs the required action listener for the load radiobutton
+    private void addLoadAction() {
+        try {
+            plates = jsonReader.read();
+            popSound();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    //EFFECTS:  performs the required action listener for the save radiobutton
+    private void addSaveAction() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(plates);
+            jsonWriter.close();
+            popSound();
+        } catch (FileNotFoundException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
+        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == addPlateButton) {
-            String plate = textField.getText().toUpperCase();
-            addPlateAction(plate);
-        } else if (e.getSource() == display) {
-            new ShowPlateGUI(plates);
-            popSound();
-        } else if (e.getSource() == load) {
-            try {
-                plates = jsonReader.read();
-                popSound();
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-        } else if (e.getSource() == save) {
-            try {
-                jsonWriter.open();
-                jsonWriter.write(plates);
-                jsonWriter.close();
-                popSound();
-            } catch (FileNotFoundException fileNotFoundException) {
-                fileNotFoundException.printStackTrace();
-            }
-        }
+    }
+
+    public static void main(String[] args) {
+        new Swing();
     }
 }
