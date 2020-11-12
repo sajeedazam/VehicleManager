@@ -31,7 +31,7 @@ public class ShowPlateGUI {
 
         frame.setTitle("Your Plates");
         frame.setVisible(true);
-        frame.setSize(302,600);
+        frame.setSize(302,400);
         frame.setResizable(true);
         panel.setBackground(new Color(0x123456));
         frame.add(panel);
@@ -50,6 +50,12 @@ public class ShowPlateGUI {
             Object[] createRow = {i + 1,plates.getLp().get(i).getPlate()};
             tableModel.addRow(createRow);
         }
+        table.setBackground(new Color(0x071C4B));
+        table.setForeground(Color.WHITE);
+        table.setBorder(BorderFactory.createEtchedBorder());
+        table.setFont(new Font("MV Boli",Font.PLAIN,15));
+        table.setRowHeight(25);
+        table.setEnabled(false);
         panel.add(table);
     }
 
