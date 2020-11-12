@@ -7,6 +7,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class ShowPlateGUI {
+
+    //fields
     JFrame frame = new JFrame();
     JPanel panel = new JPanel();
     String[] header = new String[]{"#","Plates"};
@@ -14,6 +16,8 @@ public class ShowPlateGUI {
     JTable table;
     JLabel numberOfPlates;
 
+    //MODIFIES: frame, panel
+    //EFFECTS:  constructs the new window
     public ShowPlateGUI(AllPlates plates) {
         setNumberOfPlatesLabel(plates);
 
@@ -34,6 +38,8 @@ public class ShowPlateGUI {
 
     }
 
+    //MODIFIES: table, tableModel, panel
+    //EFFECTS:  creates a JTable to insert all the plates
     private void table(AllPlates plates) {
         table = new JTable();
         tableModel = new DefaultTableModel(header,0);
@@ -47,6 +53,8 @@ public class ShowPlateGUI {
         panel.add(table);
     }
 
+    //MODIFIES: numberOfPlates, panel
+    //EFFECTS:  creates the label for the panel displaying number of plates
     private void setNumberOfPlatesLabel(AllPlates plates) {
         numberOfPlates = new JLabel();
         numberOfPlates.setText("Number of plates: " + plates.getLp().size());

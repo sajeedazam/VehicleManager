@@ -34,6 +34,7 @@ public class Swing extends JFrame implements ActionListener {
     JRadioButton save;
     ButtonGroup buttonGroup;
 
+    //MODIFIES: textField, this
     //EFFECTS:  constructs the GUI
     Swing() {
         //initializations
@@ -43,7 +44,7 @@ public class Swing extends JFrame implements ActionListener {
         jsonWriter = new JsonWriter(JSON_STORE);
         plates = new AllPlates();
 
-        //images: imported and resized
+        //logo
         ImageIcon logo = new ImageIcon("./data/LicensePlateManagerAppLogo.png");
         this.setIconImage(logo.getImage());
 
@@ -66,6 +67,7 @@ public class Swing extends JFrame implements ActionListener {
         this.add(panel);
     }
 
+    //MODIFIES: audioStream
     //EFFECTS:  plays the DingSound.wav audio
     private void dingSound() {
         AudioPlayer audioPlayer = AudioPlayer.player;
@@ -82,6 +84,7 @@ public class Swing extends JFrame implements ActionListener {
         audioPlayer.start(stream);
     }
 
+    //MODIFIES: audioStream
     //EFFECTS:  plays the PopSound.wav audio
     private void popSound() {
         AudioPlayer audioPlayer = AudioPlayer.player;
@@ -98,6 +101,7 @@ public class Swing extends JFrame implements ActionListener {
         audioPlayer.start(stream);
     }
 
+    //MODIFIES: image, labelWelcomeHeader, this
     //EFFECTS:  creates the top header of the app, adds logo and adds it to the panel
     private void setWelcomeHeader() {
         ImageIcon platePic = new ImageIcon("./data/AddLicensePlate.png");
@@ -118,6 +122,7 @@ public class Swing extends JFrame implements ActionListener {
         this.add(labelWelcomeHeader);
     }
 
+    //MODIFIES: addPlateButton
     //EFFECTS:  creates the add button
     private void setAddPlateButton() {
         addPlateButton = new JButton();
@@ -131,6 +136,7 @@ public class Swing extends JFrame implements ActionListener {
         addPlateButton.setBorder(BorderFactory.createEtchedBorder());
     }
 
+    //MODIFIES: display, image0, buttonGroup
     //EFFECTS:  creates display JRadioButton and adds an icon to it
     private void setDisplayButton() {
         display = new JRadioButton();
@@ -150,6 +156,7 @@ public class Swing extends JFrame implements ActionListener {
         buttonGroup.add(display);
     }
 
+    //MODIFIES: load, image1, buttonGroup
     //EFFECTS:  creates load JRadioButton and adds an icon to it
     private void setLoadButton() {
         load = new JRadioButton();
@@ -169,6 +176,7 @@ public class Swing extends JFrame implements ActionListener {
         buttonGroup.add(load);
     }
 
+    //MODIFIES: save, image2, buttonGroup
     //EFFECTS:  creates save JRadioButton and adds an icon to it
     private void setSaveButton() {
         save = new JRadioButton();
@@ -188,6 +196,7 @@ public class Swing extends JFrame implements ActionListener {
         buttonGroup.add(save);
     }
 
+    //MODIFIES: licensePlateList, plates
     //EFFECTS:  performs the required action listener for the add button
     private void addPlateAction() {
         String plate = textField.getText().toUpperCase();
@@ -197,6 +206,7 @@ public class Swing extends JFrame implements ActionListener {
         dingSound();
     }
 
+    //MODIFIES: panel
     //EFFECTS:  adds whatever needed to the panel
     private void addToPanel(JPanel panel) {
         panel.add(labelWelcomeHeader);
@@ -207,6 +217,7 @@ public class Swing extends JFrame implements ActionListener {
         panel.add(load);
     }
 
+    //MODIFIES: panel
     //EFFECTS:  creates the panel
     private void setPanel() {
         panel = new JPanel();
@@ -243,6 +254,7 @@ public class Swing extends JFrame implements ActionListener {
         }
     }
 
+    //MODIFIES: jsonWriter3
     //EFFECTS:  performs the required action listener for the save radiobutton
     private void addSaveAction() {
         try {
