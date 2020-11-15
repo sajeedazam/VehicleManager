@@ -2,6 +2,7 @@ package ui;
 
 import model.AllPlates;
 import model.LicensePlateList;
+import model.VehicleAttributes;
 import persistance.JsonReader;
 import persistance.JsonWriter;
 import javax.swing.*;
@@ -21,15 +22,17 @@ import sun.audio.*;
 public class Swing extends JFrame implements ActionListener {
 
     //fields
-    private AllPlates plates;
+    private AllPlates plates = new AllPlates();
     private LicensePlateList licensePlateList;
+    private VehicleAttributes vehicleAttributes;
     private final JsonWriter jsonWriter;
     private final JsonReader jsonReader;
-    private static final String JSON_STORE = "./data/LicensePlateManager.json";
+    private static final String JSON_STORE = "./data/LicensePlateManagerGUI.json";
     JLabel labelWelcomeHeader;
     JPanel panel;
     JButton addPlateButton;
     JTextField textField;
+    JTextField textField2;
     JRadioButton display;
     JRadioButton load;
     JRadioButton save;
@@ -40,19 +43,23 @@ public class Swing extends JFrame implements ActionListener {
     Swing() {
         //initializations
         textField = new JTextField();
+        textField2 = new JTextField();
         buttonGroup = new ButtonGroup();
         jsonReader = new JsonReader(JSON_STORE);
         jsonWriter = new JsonWriter(JSON_STORE);
-        plates = new AllPlates();
+//        plates = new AllPlates();
 
         //logo
         ImageIcon logo = new ImageIcon("./data/LicensePlateManagerAppLogo.png");
         this.setIconImage(logo.getImage());
 
         //text filed for user input
-        textField.setBounds(145,200,150,27);
+        textField.setBounds(145,170,150,27);
         textField.setFont(new Font("MV Boli",Font.PLAIN,15));
         textField.setText("Add plate");
+        textField2.setBounds(145,200,150,27);
+        textField2.setFont(new Font("MV Boli",Font.PLAIN,15));
+        textField2.setText("Add brand");
 
         setInterface();
 
@@ -201,8 +208,12 @@ public class Swing extends JFrame implements ActionListener {
     //EFFECTS:  performs the required action listener for the add button
     private void addPlateAction() {
         String plate = textField.getText().toUpperCase();
+        String brand = textField2.getText();
         licensePlateList = new LicensePlateList();
         licensePlateList.setPlate(plate);
+        vehicleAttributes = new VehicleAttributes();
+        vehicleAttributes.setVehicleModel(brand);
+        licensePlateList.addVehicleAttributes(vehicleAttributes);
         plates.addLp(licensePlateList);
         dingSound();
     }
@@ -213,6 +224,7 @@ public class Swing extends JFrame implements ActionListener {
         panel.add(labelWelcomeHeader);
         panel.add(addPlateButton);
         panel.add(textField);
+        panel.add(textField2);
         panel.add(display);
         panel.add(save);
         panel.add(load);
@@ -241,7 +253,7 @@ public class Swing extends JFrame implements ActionListener {
 
     //EFFECTS:  performs the required action listener for the display radiobutton
     private void addDisplayAction() {
-        new ShowPlateGUI(plates);
+        new ShowPlateGUI(plates, licensePlateList);
         popSound();
     }
 

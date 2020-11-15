@@ -1,6 +1,8 @@
 package ui;
 
 import model.AllPlates;
+import model.LicensePlateList;
+import model.VehicleAttributes;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,27 +14,27 @@ public class ShowPlateGUI {
     //fields
     JFrame frame = new JFrame();
     JPanel panel = new JPanel();
-    String[] header = new String[]{"#","Plates"};
+    String[] header = new String[]{"#","Plates","Brand"};
     DefaultTableModel tableModel;
     JTable table;
     JLabel numberOfPlates;
 
     //MODIFIES: frame, panel
     //EFFECTS:  constructs the new window
-    public ShowPlateGUI(AllPlates plates) {
+    public ShowPlateGUI(AllPlates plates, LicensePlateList licensePlateList) {
         setNumberOfPlatesLabel(plates);
 
         ImageIcon logo = new ImageIcon("./data/LicensePlateManagerAppLogo.png");
         frame.setIconImage(logo.getImage());
 
-        panel.setBounds(0,0,200,300);
+        panel.setBounds(0,0,300,300);
         panel.setBorder(BorderFactory.createLineBorder(new Color(0x071C4B),4));
 
-        table(plates);
+        table(plates, licensePlateList);
 
         frame.setTitle("Your Plates");
         frame.setVisible(true);
-        frame.setSize(302,400);
+        frame.setSize(400,400);
         frame.setResizable(true);
         panel.setBackground(new Color(0x123456));
         frame.add(panel);
@@ -41,15 +43,18 @@ public class ShowPlateGUI {
 
     //MODIFIES: table, tableModel, panel
     //EFFECTS:  creates a JTable to insert all the plates
-    private void table(AllPlates plates) {
+    private void table(AllPlates plates, LicensePlateList licensePlateList) {
         table = new JTable();
         tableModel = new DefaultTableModel(header,0);
         table.setModel(tableModel);
         tableModel.setRowCount(0);
         tableModel.addRow(header);
         for (int i = 0; i < plates.getLp().size(); i++) {
-            Object[] createRow = {i + 1,plates.getLp().get(i).getPlate()};
-            tableModel.addRow(createRow);
+            for (int j = 0; j < licensePlateList.getVehicleAttributes().size(); j++) {
+                Object[] createRow = {i + 1,plates.getLp().get(i).getPlate(),
+                        plates.getLp().get(i).getVehicleAttributes().get(j).getVehicleModel()};
+                tableModel.addRow(createRow);
+            }
         }
         table.setBackground(new Color(0x071C4B));
         table.setForeground(Color.WHITE);
