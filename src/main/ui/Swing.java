@@ -47,7 +47,6 @@ public class Swing extends JFrame implements ActionListener {
         buttonGroup = new ButtonGroup();
         jsonReader = new JsonReader(JSON_STORE);
         jsonWriter = new JsonWriter(JSON_STORE);
-//        plates = new AllPlates();
 
         //logo
         ImageIcon logo = new ImageIcon("./data/LicensePlateManagerAppLogo.png");
@@ -61,6 +60,7 @@ public class Swing extends JFrame implements ActionListener {
         textField2.setFont(new Font("MV Boli",Font.PLAIN,15));
         textField2.setText("Add brand");
 
+        //declaring and modifying all the components
         setInterface();
 
         //color of the background, title of the application and overall gui design. no method calls;
@@ -253,7 +253,7 @@ public class Swing extends JFrame implements ActionListener {
 
     //EFFECTS:  performs the required action listener for the display radiobutton
     private void addDisplayAction() {
-        new ShowPlateGUI(plates, licensePlateList);
+        new ShowPlateGUI(plates);
         popSound();
     }
 
@@ -261,6 +261,7 @@ public class Swing extends JFrame implements ActionListener {
     private void addLoadAction() {
         try {
             plates = jsonReader.read();
+
             popSound();
         } catch (IOException ioException) {
             ioException.printStackTrace();

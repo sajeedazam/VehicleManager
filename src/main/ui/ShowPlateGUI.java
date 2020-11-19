@@ -21,7 +21,7 @@ public class ShowPlateGUI {
 
     //MODIFIES: frame, panel
     //EFFECTS:  constructs the new window
-    public ShowPlateGUI(AllPlates plates, LicensePlateList licensePlateList) {
+    public ShowPlateGUI(AllPlates plates) {
         setNumberOfPlatesLabel(plates);
 
         ImageIcon logo = new ImageIcon("./data/LicensePlateManagerAppLogo.png");
@@ -30,7 +30,7 @@ public class ShowPlateGUI {
         panel.setBounds(0,0,300,300);
         panel.setBorder(BorderFactory.createLineBorder(new Color(0x071C4B),4));
 
-        table(plates, licensePlateList);
+        table(plates);
 
         frame.setTitle("Your Plates");
         frame.setVisible(true);
@@ -43,14 +43,14 @@ public class ShowPlateGUI {
 
     //MODIFIES: table, tableModel, panel
     //EFFECTS:  creates a JTable to insert all the plates
-    private void table(AllPlates plates, LicensePlateList licensePlateList) {
+    private void table(AllPlates plates) {
         table = new JTable();
         tableModel = new DefaultTableModel(header,0);
         table.setModel(tableModel);
         tableModel.setRowCount(0);
         tableModel.addRow(header);
         for (int i = 0; i < plates.getLp().size(); i++) {
-            for (int j = 0; j < licensePlateList.getVehicleAttributes().size(); j++) {
+            for (int j = 0; j < plates.getLp().get(i).getVehicleAttributes().size(); j++) {
                 Object[] createRow = {i + 1,plates.getLp().get(i).getPlate(),
                         plates.getLp().get(i).getVehicleAttributes().get(j).getVehicleModel()};
                 tableModel.addRow(createRow);
