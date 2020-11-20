@@ -1,8 +1,6 @@
 package ui;
 
 import model.AllPlates;
-import model.LicensePlateList;
-import model.VehicleAttributes;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,12 +10,12 @@ import java.awt.*;
 public class ShowPlateGUI {
 
     //fields
-    JFrame frame = new JFrame();
-    JPanel panel = new JPanel();
-    String[] header = new String[]{"#","Plates","Brand"};
-    DefaultTableModel tableModel;
-    JTable table;
-    JLabel numberOfPlates;
+    private JFrame frame = new JFrame();
+    private JPanel panel = new JPanel();
+    private String[] header = new String[]{"#","Plates","Brand","Color","Comment"};
+    private DefaultTableModel tableModel;
+    private JTable table;
+    private JLabel numberOfPlates;
 
     //MODIFIES: frame, panel
     //EFFECTS:  constructs the new window
@@ -27,14 +25,14 @@ public class ShowPlateGUI {
         ImageIcon logo = new ImageIcon("./data/LicensePlateManagerAppLogo.png");
         frame.setIconImage(logo.getImage());
 
-        panel.setBounds(0,0,300,300);
+        panel.setBounds(0,0,500,400);
         panel.setBorder(BorderFactory.createLineBorder(new Color(0x071C4B),4));
 
         table(plates);
 
         frame.setTitle("Your Plates");
         frame.setVisible(true);
-        frame.setSize(400,400);
+        frame.setSize(500,400);
         frame.setResizable(true);
         panel.setBackground(new Color(0x123456));
         frame.add(panel);
@@ -42,7 +40,7 @@ public class ShowPlateGUI {
     }
 
     //MODIFIES: table, tableModel, panel
-    //EFFECTS:  creates a JTable to insert all the plates
+    //EFFECTS:  creates a JTable and a table to display vehicle attributes and the plates
     private void table(AllPlates plates) {
         table = new JTable();
         tableModel = new DefaultTableModel(header,0);
@@ -52,7 +50,9 @@ public class ShowPlateGUI {
         for (int i = 0; i < plates.getLp().size(); i++) {
             for (int j = 0; j < plates.getLp().get(i).getVehicleAttributes().size(); j++) {
                 Object[] createRow = {i + 1,plates.getLp().get(i).getPlate(),
-                        plates.getLp().get(i).getVehicleAttributes().get(j).getVehicleModel()};
+                        plates.getLp().get(i).getVehicleAttributes().get(j).getVehicleModel(),
+                        plates.getLp().get(i).getVehicleAttributes().get(j).getVehicleColourAndType(),
+                        plates.getLp().get(i).getVehicleAttributes().get(j).getVehicleComment()};
                 tableModel.addRow(createRow);
             }
         }
