@@ -1,5 +1,6 @@
 package model;
 
+import exception.PlateStringTooLongException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,8 +26,13 @@ public class AllPlatesTest {
     @Test
     public void testSearchPlatesWorks() {
         assertNull(allPlates.searchPlate("123ABC",allPlates));
-        licensePlateList.setPlate("123ABC");
-        licensePlateList1.setPlate("ABC123");
+        try {
+            licensePlateList.setPlate("123ABC");
+            licensePlateList1.setPlate("ABC123");
+        } catch (PlateStringTooLongException e) {
+            e.printStackTrace();
+        }
+
         allPlates.addLp(licensePlateList);
         allPlates.addLp(licensePlateList1);
         assertEquals(licensePlateList.getPlate(),allPlates.searchPlate("123ABC",allPlates).getPlate());

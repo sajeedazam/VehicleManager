@@ -25,7 +25,8 @@ public class AllPlates implements Writable {
         return lp;
     }
 
-    //EFFECTS: adds a license plate into the array;
+    //MODIFIES: lp
+    //EFFECTS:  adds a license plate into the array;
     public void addLp(LicensePlateList lp0) {
         lp.add(lp0);
     }
@@ -56,6 +57,7 @@ public class AllPlates implements Writable {
         return jsonArray;
     }
 
+    //EFFECTS:  returns an unmodifiable collection of LicensePlateList;
     public List<LicensePlateList> getLicensePlateList() {
         return Collections.unmodifiableList(lp);
     }

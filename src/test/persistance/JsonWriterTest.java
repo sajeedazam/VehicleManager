@@ -1,6 +1,7 @@
 package persistance;
 
 import com.sun.org.apache.bcel.internal.generic.ALOAD;
+import exception.PlateStringTooLongException;
 import model.AllPlates;
 import model.LicensePlateList;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,11 @@ public class JsonWriterTest extends JsonTest{
             writer.write(allPlates);
             writer.close();
             JsonReader reader = new JsonReader("./data/testWriterEmptyAllPlates.json");
-            allPlates = reader.read();
+            try {
+                allPlates = reader.read();
+            } catch (PlateStringTooLongException e) {
+                e.printStackTrace();
+            }
             assertEquals(0, allPlates.getLp().size());
         } catch (IOException e) {
             fail("Exception should not have been thrown");
@@ -47,8 +52,13 @@ public class JsonWriterTest extends JsonTest{
             LicensePlateList licensePlateList1 = new LicensePlateList();
             AllPlates allPlates = new AllPlates();
             LicensePlateList licensePlateList = new LicensePlateList();
-            licensePlateList.setPlate("123ABC");
-            licensePlateList1.setPlate("ABC123");
+            try {
+                licensePlateList.setPlate("123ABC");
+                licensePlateList1.setPlate("ABC123");
+            } catch (PlateStringTooLongException e) {
+                e.printStackTrace();
+            }
+
             allPlates.addLp(licensePlateList);
             allPlates.addLp(licensePlateList1);
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralAllPlates.json");
@@ -58,7 +68,11 @@ public class JsonWriterTest extends JsonTest{
             writer.close();
 
             JsonReader reader = new JsonReader("./data/testWriterGeneralAllPlates.json");
-            allPlates = reader.read();
+            try {
+                allPlates = reader.read();
+            } catch (PlateStringTooLongException e) {
+                e.printStackTrace();
+            }
 
             List<LicensePlateList> licensePlateLists2 = allPlates.getLicensePlateList();
             assertEquals(2, allPlates.getLp().size());

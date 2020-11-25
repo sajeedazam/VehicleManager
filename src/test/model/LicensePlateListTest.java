@@ -1,5 +1,6 @@
 package model;
 
+import exception.PlateStringTooLongException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,10 +19,14 @@ public class LicensePlateListTest {
     }
 
     @Test
-    public void testGetAndSetPlateWorks() {
+    public void testGetAndSetPlateWorksAndExceptionNotCaught() {
         assertTrue(plate1.getVehicleAttributes().size()==0);
         assertEquals(null,plate1.getPlate());
-        plate1.setPlate("123-ABC");
+        try {
+            plate1.setPlate("123-ABC");
+        } catch (PlateStringTooLongException e) {
+            fail("Should not have thrown exception.");
+        }
         assertEquals("123-ABC",plate1.getPlate());
         plate1.addVehicleAttributes(attributes1);
         assertTrue(plate1.getVehicleAttributes().size()==1);
@@ -29,8 +34,22 @@ public class LicensePlateListTest {
 
     @Test
     public void testSetPlateWorks() {
-        plate1.setPlate("123-ABC");
+        try {
+            plate1.setPlate("123-ABC");
+        } catch (PlateStringTooLongException e) {
+            fail("Should not have thrown exception.");
+        }
         assertTrue(plate1.getPlate().equals("123-ABC"));
+    }
+
+    @Test
+    public void testExeceptionCaught() {
+        try {
+            plate1.setPlate("123-ABCCCC");
+            fail("Should have thrown exception.");
+        } catch (PlateStringTooLongException e) {
+            assertEquals(null,plate1.getPlate());
+        }
     }
 
     @Test

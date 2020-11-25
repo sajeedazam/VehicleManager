@@ -71,7 +71,7 @@ benefit the user.
 
 ## Phase 4: Task 2 and 3
 
-- HashMaps is used in implementing the JsonReader and JsonWriter classes.
+- Made LicensePlateList class robust by adding an exception and testing it according to task 2.
 - For the UML, all the associations for each class is as follows:
 - VehicleAttributes: This class does not have any object(s) of any class but implements the Writeable interface.
 - LicensePlateList: This class has a List of VehicleAttributes and implements the Writeable interface. It may be argued 

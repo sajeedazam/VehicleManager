@@ -1,5 +1,6 @@
 package model;
 
+import exception.PlateStringTooLongException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistance.Writable;
@@ -26,9 +27,14 @@ public class LicensePlateList implements Writable {
         return plate;
     }
 
-    //EFFECTS:  sets plate;
-    public void setPlate(String plate) {
-        this.plate = plate;
+    //MODIFIES: this
+    //EFFECTS:  sets plate and throws PlateStringTooLongException if the plate string is longer than 7;
+    public void setPlate(String plate) throws PlateStringTooLongException {
+        if (plate.length() > 7) {
+            throw new PlateStringTooLongException("Plate name too long");
+        } else {
+            this.plate = plate;
+        }
     }
 
     //EFFECTS:  returns the VehicleAttributes from the ArrayList;
@@ -36,6 +42,7 @@ public class LicensePlateList implements Writable {
         return vehicleAttributes;
     }
 
+    //MODIFIES: vehicleAttributes;
     //EFFECTS:  adds vehicle attributes;
     public void addVehicleAttributes(VehicleAttributes vehicleAttribute) {
         vehicleAttributes.add(vehicleAttribute);

@@ -33,25 +33,21 @@ public class VehicleAttributes implements Writable {
 
     //getters
 
-    //MODIFIES: this
     //EFFECT: returns vehicle colour and type
     public String getVehicleColourAndType() {
         return this.vehicleColourAndType;
     }
 
-    //MODIFIES: this
     //EFFECT: returns vehicle model
     public String getVehicleModel() {
         return this.vehicleModel;
     }
 
-    //MODIFIES: this
     //EFFECT: returns comment on vehicle
     public String getVehicleComment() {
         return this.vehicleComment;
     }
 
-    //MODIFIES: this
     //EFFECT:   returns "Vehicle of Commercial use." if isVehiclePrivate is false.
     //          returns "Vehicle of Private use." if isVehiclePrivate is true.
     public String getVehiclePrivateOrNot() {
@@ -62,7 +58,6 @@ public class VehicleAttributes implements Writable {
         }
     }
 
-    //MODIFIES: this
     //EFFECT: returns vehicleIsPrivate;
     public boolean isVehicleIsPrivate() {
         return this.vehicleIsPrivate;
@@ -70,31 +65,26 @@ public class VehicleAttributes implements Writable {
 
     //setters
 
-    //MODIFIES: this
     //EFFECTS:  sets vehicleType;
     public void setVehicleColourAndType(String vehicleColAndType) {
         this.vehicleColourAndType = vehicleColAndType;
     }
 
-    //MODIFIES: this
     //EFFECTS:  sets vehicleModel;
     public void setVehicleModel(String vehicleModel) {
         this.vehicleModel = vehicleModel;
     }
 
-    //MODIFIES: this
     //EFFECTS:  sets vehicleComment
     public void setVehicleComment(String vehicleComment) {
         this.vehicleComment = vehicleComment;
     }
 
-    //MODIFIES: this
     //EFFECTS:  sets vehicleIsPrivate;
     public void setVehicleIsPrivate(boolean vehicleIsPrivate) {
         this.vehicleIsPrivate = vehicleIsPrivate;
     }
 
-    //MODIFIES: this
     //EFFECTS:  returns the toString() of VehicleAttributes;
     @Override
     public String toString() {

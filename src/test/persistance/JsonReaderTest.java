@@ -1,5 +1,6 @@
 package persistance;
 
+import exception.PlateStringTooLongException;
 import model.AllPlates;
 import model.LicensePlateList;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,11 @@ public class JsonReaderTest extends JsonTest {
     void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("./data/noSuchFile.json");
         try {
-            AllPlates allPlates = reader.read();
+            try {
+                AllPlates allPlates = reader.read();
+            } catch (PlateStringTooLongException e) {
+                e.printStackTrace();
+            }
             fail("IOException expected");
         } catch (IOException e) {
             // pass
@@ -32,7 +37,12 @@ public class JsonReaderTest extends JsonTest {
             writer.write(allPlates);
             writer.close();
             JsonReader reader = new JsonReader("./data/testReaderEmptyAllPlates.json");
-            AllPlates allPlates = reader.read();
+            AllPlates allPlates = null;
+            try {
+                allPlates = reader.read();
+            } catch (PlateStringTooLongException e) {
+                e.printStackTrace();
+            }
             assertEquals(0, allPlates.getLp().size());
         } catch (IOException e) {
             fail("Couldn't read from file");
@@ -46,7 +56,11 @@ public class JsonReaderTest extends JsonTest {
             vehicleAttributes.setVehicleIsPrivate(true);
             vehicleAttributes.setVehicleColourAndType("ctype");
             vehicleAttributes.setVehicleComment("comment");
-            licensePlateList.setPlate("123ABC");
+            try {
+                licensePlateList.setPlate("123ABC");
+            } catch (PlateStringTooLongException e) {
+                e.printStackTrace();
+            }
             allPlates.addLp(licensePlateList);
             licensePlateList.addVehicleAttributes(vehicleAttributes);
             checkVehicleAtributes("ctype","model","comment",true,vehicleAttributes);
@@ -57,7 +71,12 @@ public class JsonReaderTest extends JsonTest {
             writer.close();
             JsonReader reader = new JsonReader("./data/testReaderEmptyAllPlates.json");
 
-            AllPlates allPlates = reader.read();
+            AllPlates allPlates = null;
+            try {
+                allPlates = reader.read();
+            } catch (PlateStringTooLongException e) {
+                e.printStackTrace();
+            }
             List<LicensePlateList> licensePlateLists1 = allPlates.getLicensePlateList();
             assertEquals(1,licensePlateLists1.size());
             assertEquals(1, allPlates.getLp().size());

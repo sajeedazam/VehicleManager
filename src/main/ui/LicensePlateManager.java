@@ -1,5 +1,6 @@
 package ui;
 
+import exception.PlateStringTooLongException;
 import model.AllPlates;
 import model.LicensePlateList;
 import model.VehicleAttributes;
@@ -65,7 +66,6 @@ public class LicensePlateManager {
     private void action(String userInput) {
         if (userInput.equals("add")) {
             addLicensePlateListName();
-            System.out.println("Vehicle successfully added.");
         } else if (userInput.equals("ctype")) {
             addVechColourAndType();
         } else if (userInput.equals("model")) {
@@ -90,7 +90,11 @@ public class LicensePlateManager {
     //EFFECTS:  loads plates from the file;
     private void loadPlates() {
         try {
-            allPlates = jsonReader.read();
+            try {
+                allPlates = jsonReader.read();
+            } catch (PlateStringTooLongException e) {
+                e.printStackTrace();
+            }
             System.out.println("Loaded");
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
@@ -233,8 +237,14 @@ public class LicensePlateManager {
         lp = new LicensePlateList();
         String addedLicensePlate = scan.nextLine();
         addedLicensePlate = addedLicensePlate.toUpperCase();
-        lp.setPlate(addedLicensePlate);
-        allPlates.addLp(lp);
+        try {
+            lp.setPlate(addedLicensePlate);
+            allPlates.addLp(lp);
+            System.out.println("Vehicle successfully added.");
+        } catch (PlateStringTooLongException e) {
+            System.out.println("Plate is too long");
+        }
+
     }
 
     //EFFECTS:  prints out all the license plates;

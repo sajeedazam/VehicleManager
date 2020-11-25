@@ -1,5 +1,6 @@
 package ui;
 
+import exception.PlateStringTooLongException;
 import model.AllPlates;
 import model.LicensePlateList;
 import model.VehicleAttributes;
@@ -76,7 +77,7 @@ public class Swing extends JFrame implements ActionListener {
         addCommentField = new JTextField();
         addPlateField.setBounds(145,160,150,27);
         addPlateField.setFont(new Font("MV Boli",Font.PLAIN,15));
-        addPlateField.setText("Plate name");
+        addPlateField.setText("Plate");
         addModelField.setBounds(145,190,150,27);
         addModelField.setFont(new Font("MV Boli",Font.PLAIN,15));
         addModelField.setText("Vehicle's brand");
@@ -225,7 +226,11 @@ public class Swing extends JFrame implements ActionListener {
         String color = addCtypeField.getText();
         String comment = addCommentField.getText();
         licensePlateList = new LicensePlateList();
-        licensePlateList.setPlate(plate);
+        try {
+            licensePlateList.setPlate(plate);
+        } catch (PlateStringTooLongException e) {
+            e.printStackTrace();
+        }
         vehicleAttributes = new VehicleAttributes();
         vehicleAttributes.setVehicleModel(brand);
         vehicleAttributes.setVehicleColourAndType(color);
@@ -280,7 +285,11 @@ public class Swing extends JFrame implements ActionListener {
     //EFFECTS:  performs the required action listener for the load radiobutton
     private void addLoadAction() {
         try {
-            plates = jsonReader.read();
+            try {
+                plates = jsonReader.read();
+            } catch (PlateStringTooLongException e) {
+                e.printStackTrace();
+            }
             popSound();
         } catch (IOException ioException) {
             ioException.printStackTrace();

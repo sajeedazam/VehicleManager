@@ -1,5 +1,6 @@
 package persistance;
 
+import exception.PlateStringTooLongException;
 import model.AllPlates;
 import model.VehicleAttributes;
 import model.LicensePlateList;
@@ -25,7 +26,7 @@ public class JsonReader {
 
     //EFFECTS:  reads AllPlates from file and returns it;
     //          throws IOException if an error occurs reading data from file;
-    public AllPlates read() throws IOException {
+    public AllPlates read() throws IOException, PlateStringTooLongException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseAllPlates(jsonObject);
@@ -42,7 +43,7 @@ public class JsonReader {
     }
 
     //EFFECTS:  parses AllPlates from JSON object and returns it;
-    private AllPlates parseAllPlates(JSONObject jsonObject) {
+    private AllPlates parseAllPlates(JSONObject jsonObject) throws PlateStringTooLongException {
         AllPlates allPlates = new AllPlates();
         addToListOfPlates(allPlates, jsonObject);
         return allPlates;
@@ -50,7 +51,7 @@ public class JsonReader {
 
     //MODIFIES: allPlates;
     //EFFECTS:  parses licensePlateList from JSON object and adds them to AllPlates;
-    private void addToListOfPlates(AllPlates allPlates, JSONObject jsonObject) {
+    private void addToListOfPlates(AllPlates allPlates, JSONObject jsonObject) throws PlateStringTooLongException {
         JSONArray jsonArray = jsonObject.getJSONArray("allPlates");
         for (Object json : jsonArray) {
             JSONObject nextPlate = (JSONObject) json;
@@ -60,7 +61,7 @@ public class JsonReader {
 
     //MODIFIES: allPlates;
     //EFFECTS:  parses LicensePlateList from JSON object and adds it to AllPlates;
-    private void addPlate(AllPlates allPlates, JSONObject jsonObject) {
+    private void addPlate(AllPlates allPlates, JSONObject jsonObject) throws PlateStringTooLongException {
         String plateNumber = jsonObject.getString("plates");
         LicensePlateList licensePlateList = new LicensePlateList();
         licensePlateList.setPlate(plateNumber);
