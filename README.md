@@ -64,3 +64,29 @@ benefit the user.
 
 - As a user, I want to be able to save all my added license plates.
 - As a user, I want to be able to load all my added license plates.
+
+## User Stories (Phase 3)
+
+- As a user, I want to be able to see how many plates I have *currently* added. (only for GUI)
+
+## Phase 4: Task 2 and 3
+
+- HashMaps is used in implementing the JsonReader and JsonWriter classes.
+- For the UML, all the associations for each class is as follows:
+- VehicleAttributes: This class does not have any object(s) of any class but implements the Writeable interface.
+- LicensePlateList: This class has a List of VehicleAttributes and implements the Writeable interface. It may be argued 
+that VehicleAttributes should have been initialized as an object, but it is made as a list so that the user is able to 
+add multiple comments if they want to (which adheres to the design). Hence, a list is used so that the user may still 
+have that option but this user story is not explicit.
+- AllPlates: This class has a list of LicensePlateList so that it can be used to display all the license plates. It also
+implements the Writeable interface.
+- JsonReader: This class does not use any model class.
+- JsonWriter: This class does not use any model class.
+- Writeable: This is an interface that does not have any other objects or implementations.
+- LicensePlateManager: This is in the ui class, so it makes use of all the model classes.
+- Swing: Same as the LicensePlateManager it uses all the model classes. As the GUI uses a pop up window that displays 
+all the plates and attributes it calls the ShowPlateGui class zero or multiple times therefore it has an association 
+with the ShowPlateGUI class.
+- ShowPlateGUI: This class does not call any object(s) that are not from the Java library.
+- ***Any changes that could be made:*** The Swing class could extend the LicensePlateManager so that it could make use of 
+its fields as both classes have almost the same classes initialized as objects.

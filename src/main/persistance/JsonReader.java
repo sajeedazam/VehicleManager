@@ -11,9 +11,11 @@ import java.util.stream.Stream;
 
 import org.json.*;
 
+//used keys for JsonObject (Task 2)
 //citation: json implementations from JsonSerializationDemo;
 public class JsonReader {
 
+    //fields
     private String source;
 
     //EFFECTS:  constructs reader to read from source file;

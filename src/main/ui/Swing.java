@@ -38,7 +38,7 @@ public class Swing extends JFrame implements ActionListener {
     private JRadioButton display;
     private JRadioButton load;
     private JRadioButton save;
-    private ButtonGroup buttonGroup;
+    private final ButtonGroup buttonGroup;
 
     //MODIFIES: textField, this
     //EFFECTS:  constructs the GUI

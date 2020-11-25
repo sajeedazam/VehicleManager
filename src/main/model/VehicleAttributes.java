@@ -28,7 +28,9 @@ public class VehicleAttributes implements Writable {
         this.setVehicleComment("Not set.");
         this.setVehicleIsPrivate(true);
     }
+
     //methods
+
     //getters
 
     //MODIFIES: this

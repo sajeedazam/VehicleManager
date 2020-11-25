@@ -1,7 +1,6 @@
 package persistance;
 
 import model.AllPlates;
-import model.LicensePlateList;
 import org.json.JSONObject;
 
 import java.io.File;
