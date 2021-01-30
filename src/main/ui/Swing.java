@@ -123,7 +123,7 @@ public class Swing extends JFrame implements ActionListener {
         audioPlayer.start(stream);
     }
 
-    //MODIFIES: image, labelWelcomeHeader, this
+    //MODIFIES: image, labelWelcomeHeader, this;
     //EFFECTS:  creates the top header of the app, adds logo and adds it to the panel
     private void setWelcomeHeader() {
         ImageIcon platePic = new ImageIcon("./data/AddLicensePlate.png");
