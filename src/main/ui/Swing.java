@@ -131,6 +131,7 @@ public class Swing extends JFrame implements ActionListener {
         Image newImage = image.getScaledInstance(60, 60,  java.awt.Image.SCALE_SMOOTH);
         platePic = new ImageIcon(newImage);
 
+
         labelWelcomeHeader = new JLabel();
         labelWelcomeHeader.setText("Welcome to License Plate Manager!");
         labelWelcomeHeader.setIcon(platePic);
