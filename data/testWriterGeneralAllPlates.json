@@ -1,0 +1,10 @@
+{"allPlates": [
+    {
+        "plates": "123ABC",
+        "vechAtts": []
+    },
+    {
+        "plates": "ABC123",
+        "vechAtts": []
+    }
+]}

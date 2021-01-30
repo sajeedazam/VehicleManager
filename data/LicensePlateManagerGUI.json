@@ -1,0 +1,9 @@
+{"allPlates": [{
+    "plates": "123-ABC",
+    "vechAtts": [{
+        "ctype": "Black",
+        "use": true,
+        "model": "Nissan",
+        "comment": "good"
+    }]
+}]}

@@ -1,0 +1,9 @@
+{"allPlates": [{
+    "plates": "123ABC",
+    "vechAtts": [{
+        "ctype": "ctype",
+        "use": true,
+        "model": "model",
+        "comment": "comment"
+    }]
+}]}
